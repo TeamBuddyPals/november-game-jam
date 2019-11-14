@@ -1,0 +1,8 @@
+.DS_STORE
+dist
+node_modules
+*.tsx
+*.iml
+.idea/
+src/boilerplate/*.js*
+src/boilerplate/scenes/*.js*

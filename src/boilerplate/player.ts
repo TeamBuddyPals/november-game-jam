@@ -1,3 +1,8 @@
+export enum Actions {
+    LEFT = 'LEFT',
+    RIGHT = 'RIGHT'
+}
+
 export class Player {
     private _sprite: Phaser.Physics.Arcade.Sprite;
     private _leftKey: Phaser.Input.Keyboard.Key;
@@ -29,10 +34,13 @@ export class Player {
     }
 
     moveLeft(): void {
+        console.log(`Before move: ${this._sprite.x}`);
         this._sprite.setX(this._sprite.x - 30)
+        console.log(`After move: ${this._sprite.x}`);
     }
 
     moveRight(): void {
+        // console.log(this);
         this._sprite.setX(this._sprite.x + 30);
     }
 
@@ -54,7 +62,20 @@ export class Player {
 
     performSelectedActions(selectedActions) {
         for (let index = 0; index < selectedActions.length; index++) {
-            selectedActions[index](); 
+            console.log(`Inside loop: ${index}`);
+            switch(selectedActions[index]) {
+                case Actions.LEFT: {
+                    console.log('Perform left');
+                    this.moveLeft();
+                    break;
+                }
+                case Actions.RIGHT: {
+                    console.log('Perform right');
+                    this.moveRight();
+                    break;
+                }
+            }
+             
         }
     }
 
@@ -63,9 +84,9 @@ export class Player {
         // TODO replace JustDown and JustUp
         if (this._selectedActions.length < 3) {
             if (Phaser.Input.Keyboard.JustDown(this._leftKey)) {
-                this._selectedActions.push(this.moveLeft);
+                this._selectedActions.push(Actions.LEFT);
             } else if (Phaser.Input.Keyboard.JustDown(this._rightKey)){
-                this._selectedActions.push(this.moveRight);
+                this._selectedActions.push(Actions.RIGHT);
             }
         }
 
